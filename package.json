@@ -1,0 +1,12 @@
+{
+  "name": "hubot-twitter-userstream",
+  "version": "0.0.0",
+  "description": "hubot-twit is an adapter for Hubot that allows you to use the robot with Twitter user TL.",
+  "main": "src/twitter.coffee",
+  "dependencies": {
+    "twit": ""
+  },
+  "devDependencies": {},
+  "author": "hoo89 (hoo89@me.com)",
+  "license": "MIT"
+}
