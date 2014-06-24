@@ -5,7 +5,7 @@
   "main": "src/twitter-userstream",
   "repository": {
     "type": "git",
-    "url": "git@github.com:idobata/hubot-idobata.git"
+    "url": "git@github.com:hoo89/hubot-twitter-userstream.git"
   },
   "dependencies": {
     "twit": "~> 1.1.15",
