@@ -5,7 +5,7 @@ querystring = require 'querystring'
 MockRobot = require './mock/robot'
 Tweet = require './case/tweet'
 
-Adapter = require 'hubot-twitter-tl'
+Adapter = require '../'
 
 
 process.env.HUBOT_LOG_LEVEL = 'ALERT'
