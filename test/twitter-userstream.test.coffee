@@ -145,7 +145,7 @@ describe 'hubot-twitter-tl', ->
         adapter.send(envelope.direct_message, 'test')
 
       it 'should cut tweet to 140 characters, if tweet is too long', (done) ->
-        longer = Array(141).join('a')
+        longer = Array(142).join('a')
 
         nock('https://api.twitter.com')
           .post('/1.1/statuses/update.json')
@@ -200,16 +200,3 @@ describe 'hubot-twitter-tl', ->
 
         user = { id: 416981850, name: 'ju_no89', room: 'Twitter' }
         adapter.part(user)
-
-
-
-
-
-        
-
-
-
-
-
-
-

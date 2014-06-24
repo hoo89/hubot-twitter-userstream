@@ -101,7 +101,7 @@ class Twitter extends Hubot.Adapter
 
   _postTweet: (text, replyId) ->
     if @_getTweetLength(text) > 140
-      @robot.logger.warn 'The text of your tweet is too long.'
+      @robot.logger.warning 'The text of your tweet is too long.'
       text = @_cutTweet(text)
     else
     @client.post 'statuses/update', {status: text, in_reply_to_status_id: replyId}, (err, data, response) =>
@@ -109,7 +109,7 @@ class Twitter extends Hubot.Adapter
 
   _postDirectMessage: (text, userId) ->
     if @_getTweetLength(text) > 140
-      @robot.logger.warn 'The text of your tweet is too long.'
+      @robot.logger.warning 'The text of your tweet is too long.'
       text = @_cutTweet(text)
     @client.post 'direct_messages/new', {text: text, user_id: userId}, (err, data, response) =>
       @robot.logger.error "twitter-tl error: #{err}" if err?
@@ -117,7 +117,7 @@ class Twitter extends Hubot.Adapter
   _getTweetLength: (text) ->
     TwitterText.getTweetLength(text)
 
-  _cutTweet = (text) ->
+  _cutTweet: (text) ->
     if TwitterText.getTweetLength(text) <= 140
       text
     else
