@@ -10,7 +10,7 @@ Adapter = require '../'
 
 process.env.HUBOT_LOG_LEVEL = 'ALERT'
 
-describe 'hubot-twitter-tl', ->
+describe 'hubot-twitter-userstream', ->
   robot = null
   adapter = null
 
