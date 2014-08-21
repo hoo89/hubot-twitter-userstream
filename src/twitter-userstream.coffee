@@ -23,11 +23,11 @@ class Twitter extends Hubot.Adapter
 
   join: (user) ->
     @client.post 'friendships/create', {user_id: user.id}, (err, data, response) =>
-      @robot.logger.error "twitter-tl join error: #{err}" if err?
+      @robot.logger.error "twitter-userstream join error: #{err}" if err?
 
   part: (user) ->
     @client.post 'friendships/destroy', {user_id: user.id}, (err, data, response) =>
-      @robot.logger.error "twitter-tl part error: #{err}" if err?
+      @robot.logger.error "twitter-userstream part error: #{err}" if err?
 
   run: ->
     keys = {
@@ -46,7 +46,7 @@ class Twitter extends Hubot.Adapter
 
     @client.get 'account/verify_credentials', (err, user, response) =>
       if err
-        @robot.logger.error "twitter-tl run error: #{err}"
+        @robot.logger.error "twitter-userstream run error: #{err}"
       else
         @botUser = @robot.brain.userForId user.id, {name: user.screen_name, room: 'Twitter'}
 
@@ -103,21 +103,25 @@ class Twitter extends Hubot.Adapter
     if @_getTweetLength(text) > 140
       @robot.logger.warning 'The text of your tweet is too long.'
       text = @_cutTweet(text)
-    else
+
     @client.post 'statuses/update', {status: text, in_reply_to_status_id: replyId}, (err, data, response) =>
-      @robot.logger.error "twitter-tl error: #{err}" if err?
+      @robot.logger.error "twitter-userstream error: #{err}" if err?
 
   _postDirectMessage: (text, userId) ->
     if @_getTweetLength(text) > 140
       @robot.logger.warning 'The text of your tweet is too long.'
       text = @_cutTweet(text)
+
     @client.post 'direct_messages/new', {text: text, user_id: userId}, (err, data, response) =>
-      @robot.logger.error "twitter-tl error: #{err}" if err?
+      @robot.logger.error "twitter-userstream error: #{err}" if err?
 
   _getTweetLength: (text) ->
     TwitterText.getTweetLength(text)
 
   _cutTweet: (text) ->
+    # If tweet is longer than 140 chars, twittter-userstream try to post message as long as possible.
+    # But included URL is not interrupted.
+
     if TwitterText.getTweetLength(text) <= 140
       text
     else
@@ -139,13 +143,14 @@ class Twitter extends Hubot.Adapter
           if i.is_url
             if left >= 23
               str = str.concat(i.text)
-              left -= 23
+              left = 140 - TwitterText.getTweetLength(str)
             else
               break
           else
             if left > 0
+              i.text = i.text.slice(0, left)
               str = str.concat(i.text)
-              left -= i.text.length
+              left = 140 - TwitterText.getTweetLength(str)
             else
               break
 
