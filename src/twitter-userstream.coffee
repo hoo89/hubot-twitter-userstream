@@ -119,6 +119,9 @@ class Twitter extends Hubot.Adapter
     TwitterText.getTweetLength(text)
 
   _cutTweet: (text) ->
+    # If tweet is longer than 140 chars, twittter-userstream try to post message as long as possible.
+    # But included URL is not interrupted.
+
     if TwitterText.getTweetLength(text) <= 140
       text
     else
@@ -140,13 +143,14 @@ class Twitter extends Hubot.Adapter
           if i.is_url
             if left >= 23
               str = str.concat(i.text)
-              left -= 23
+              left = 140 - TwitterText.getTweetLength(str)
             else
               break
           else
             if left > 0
+              i.text = i.text.slice(0, left)
               str = str.concat(i.text)
-              left -= i.text.length
+              left = 140 - TwitterText.getTweetLength(str)
             else
               break
 
