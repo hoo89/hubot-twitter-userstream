@@ -23,20 +23,20 @@ At first, you will need to set some API keys.
 
 ## Messages
 Properties of received message.
-{
-	id: <status_id>
-	user: {id: <user_id>, name: <screen_name>, room: <"Twitter" or "TwitterDirectMessage"> },
-	text: <body of message>
-	data: <raw object of tweet or direct message>
-}
+
+    {
+    	id: <status_id>
+    	user: {id: <user_id>, name: <screen_name>, room: <"Twitter" or "TwitterDirectMessage"> },
+    	text: <body of message>
+    	data: <raw object of tweet or direct message>
+    }
 
 ## Events
-favorited - {user: <user object to favorited user>, tweet: <favorited tweet>}
-unfavorited - {user: <user object to unfavorited user>, tweet: <unfavorited tweet>}
-The tweet is equal to target_object in https://dev.twitter.com/docs/streaming-apis/messages#Events_event .
 
-followed - {user: <user object to followed user>}
-unfollowed - {user: <user object to followed user>}
+    favorited - {user: <user object to favorited user>, tweet: <favorited tweet>}
+    unfavorited - {user: <user object to unfavorited user>, tweet: <unfavorited tweet>}
+    followed - {user: <user object to followed user>}
+    unfollowed - {user: <user object to followed user>}
 
 ## Copyright
 Copyright(c) 2014 hoo89 http://hoo89.hatenablog.com/ hoo89@me.com
