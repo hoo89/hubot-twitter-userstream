@@ -156,6 +156,18 @@ describe 'hubot-twitter-userstream', ->
 
         adapter.send(envelope.tweet, longer)
 
+      it "shouldn't interrupt URL", (done) ->
+        longer = 'https://www.google.com/calendar/render ' + Array(142).join('a')
+
+        nock('https://api.twitter.com')
+          .post('/1.1/statuses/update.json')
+          .reply 200, (uri, body) ->
+            request = querystring.parse(body)
+            assert.equal request.status.length, 155 #38+(140-23)
+            done()
+
+        adapter.send(envelope.tweet, longer)
+
     describe '#reply', ->
       it 'should reply to tweet', (done) ->
         nock('https://api.twitter.com')
